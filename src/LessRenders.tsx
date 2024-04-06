@@ -7,15 +7,16 @@ const GlobalModalContextDefault = {
   activeModal: 'none'
 };
 const GlobalModalActionsContextDefault = {
-  setModal: () => {}
+  show: (activeModal: string) => {},
+  hide: (activeModal: string) => {},
 };
 const ModalContext = createContext(GlobalModalContextDefault);
-const ModalActionsContext = createContext(GlobalModalContextDefault);
+const ModalActionsContext = createContext(GlobalModalActionsContextDefault);
 
 export default function App() {
   const [activeModal, setActiveModal] = useState('none');
-  const show = useCallback((activeModal) => { setActiveModal(activeModal) }, []);
-  const hide = useCallback((activeModal) => { setActiveModal('none') }, []);
+  const show = useCallback((activeModal: string) => { setActiveModal(activeModal) }, []);
+  const hide = useCallback((activeModal: string) => { setActiveModal('none') }, []);
 
   const modalProviderValue = useMemo(() => ({ activeModal }), [activeModal]);
   const modalActionsProviderValue = useMemo(() => ({ show, hide }), [show, hide]);
@@ -36,7 +37,8 @@ export default function App() {
 }
 
 const GlobalModal = memo(() => {
-  const { activeModal, hide } = useContext(ModalContext);
+  const { activeModal } = useContext(ModalContext);
+  const { hide } = useContext(ModalActionsContext);
   return (
     <div style={greenStyle}>
       <h3>Selected Global Modal: <span style={activeModalStyle}>{activeModal}</span></h3>

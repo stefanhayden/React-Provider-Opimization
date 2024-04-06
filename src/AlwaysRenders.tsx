@@ -4,14 +4,15 @@ import { redStyle, activeModalStyle } from './helpers/styles'
 
 const GlobalModalContextDefault = {
   activeModal: 'none',
-  setModal: () => {}
+  show: (activeModal: string) => {},
+  hide: (activeModal: string) => {},
 };
 const ModalContext = createContext(GlobalModalContextDefault);
 
 export default function App() {
-  const [activeModal, setActiveModal] = useState('none');
-  const show = useCallback((activeModal) => setActiveModal(activeModal), []);
-  const hide = useCallback((activeModal) => setActiveModal('none'), []);
+  const [activeModal, setActiveModal] = useState<string>('none');
+  const show = useCallback((activeModal: string) => setActiveModal(activeModal), []);
+  const hide = useCallback((activeModal: string) => setActiveModal('none'), []);
 
   const modalProviderValue = useMemo(
     () => ({ activeModal, show, hide }),
