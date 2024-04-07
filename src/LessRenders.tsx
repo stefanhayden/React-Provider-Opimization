@@ -59,7 +59,7 @@ const GlobalModal = memo(() => {
         Selected Global Modal:{" "}
         <span style={activeModalStyle}>{activeModal}</span>
       </h3>
-      <button onClick={() => hide("Login")}>hide modal</button>
+      <button onClick={() => hide()}>hide modal</button>
       <RenderCounter />
     </div>
   );
